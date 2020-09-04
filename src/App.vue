@@ -31,7 +31,7 @@ export default {
           items: [
             { name: "Item Four", id: 4 },
             { name: "Item Five", id: 5 },
-            { name: "Item Six", id: 6 },
+            { name: "Item Six", id: 6, checked: true },
           ],
         },
       ],
