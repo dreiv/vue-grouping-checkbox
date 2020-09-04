@@ -52,6 +52,13 @@ export default {
       },
     },
   },
+  mounted() {
+    this.groups.forEach((group) => {
+      group.items.forEach(() => {
+        this.updateChild(group);
+      });
+    });
+  },
   methods: {
     update(checked) {
       this.groups.forEach((group) => {
