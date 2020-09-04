@@ -1,34 +1,41 @@
 <template>
   <div id="app">
-    <label v-for="item of items" :key="item.id">
-      <input type="checkbox" :value="item" v-model="item.checked" />
-      {{ item.name }}
-    </label>
+    <checkbox-groups :groups="groups"/>
+
     <hr>
-    <p>Items: {{ items }}</p>
+    <p>Items: {{ groups }}</p>
   </div>
 </template>
 
 <script>
+import CheckboxGroups from "@/components/CheckboxGroups.vue";
+
 export default {
   name: "App",
+  components: { CheckboxGroups },
   data() {
     return {
-      items: [
-        { name: "One", id: 1 },
-        { name: "Two", id: 2 },
-        { name: "Three", id: 3 },
-        { name: "Four", id: 4 },
-        { name: "Five", id: 5 },
-        { name: "Six", id: 6 },
+      groups: [
+        {
+          name: "Group One",
+          id: 1,
+          items: [
+            { name: "Item One", id: 1 },
+            { name: "Item Two", id: 2 },
+            { name: "Item Three", id: 3 },
+          ],
+        },
+        {
+          name: "Group Two",
+          id: 2,
+          items: [
+            { name: "Item Four", id: 4 },
+            { name: "Item Five", id: 5 },
+            { name: "Item Six", id: 6 },
+          ],
+        },
       ],
     };
   },
 };
 </script>
-
-<style>
-label {
-  display: block;
-}
-</style>
