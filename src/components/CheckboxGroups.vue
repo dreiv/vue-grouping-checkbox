@@ -4,7 +4,7 @@
       type="checkbox"
       v-model="checked"
       v-indeterminate="indeterminate"
-      @change="update(checked)"
+      @change="updateAll(checked)"
     />
     <div v-for="group of groups" :key="group.id">
       <input
@@ -21,7 +21,7 @@
           type="checkbox"
           :value="item"
           v-model="item.checked"
-          @change="updateChild(group)"
+          @change="updateItem(group)"
         />
         {{ item.name }}
       </label>
@@ -31,6 +31,7 @@
 
 <script>
 import Vue from "vue";
+const isChecked = ({ checked }) => checked;
 
 export default {
   props: {
@@ -55,12 +56,12 @@ export default {
   mounted() {
     this.groups.forEach((group) => {
       group.items.forEach(() => {
-        this.updateChild(group);
+        this.updateItem(group);
       });
     });
   },
   methods: {
-    update(checked) {
+    updateAll(checked) {
       this.groups.forEach((group) => {
         this.indeterminate = false;
         group.checked = checked;
@@ -71,6 +72,16 @@ export default {
         });
       });
     },
+    updateTop() {
+      if (this.groups.some(({ indeterminate }) => indeterminate)) {
+        return (this.indeterminate = true);
+      }
+      const every = this.groups.every(isChecked);
+      const some = this.groups.some(isChecked);
+
+      this.checked = every;
+      this.indeterminate = !every && every !== some;
+    },
     updateGroup(group, checked) {
       const { items } = group;
 
@@ -79,29 +90,18 @@ export default {
         Vue.set(item, "checked", checked);
         item.checked = checked;
       });
+
       this.updateTop();
     },
-    updateChild(group) {
+    updateItem(group) {
       const { items } = group;
-      const every = items.every(({ checked }) => checked);
-      const some = items.some(({ checked }) => checked);
+      const every = items.every(isChecked);
+      const some = items.some(isChecked);
 
       group.checked = every;
       group.indeterminate = !every && every !== some;
-      this.updateTop();
-    },
-    updateTop() {
-      const isIndeterminate = this.groups.some(
-        ({ indeterminate }) => indeterminate
-      );
-      if (isIndeterminate) {
-        return (this.indeterminate = true);
-      }
-      const every = this.groups.every(({ checked }) => checked);
-      const some = this.groups.some(({ checked }) => checked);
 
-      this.checked = every;
-      this.indeterminate = !every && every !== some;
+      this.updateTop();
     },
   },
 };
