@@ -6,7 +6,8 @@
         type="checkbox"
         :value="group"
         v-model="group.checked"
-        v-indeterminate="indeterminate"
+        v-indeterminate="group.indeterminate"
+        @change="updateChildren(group, group.checked)"
       />
       {{group.name}}
       <label v-for="item of group.items" :key="item.id">
@@ -22,6 +23,8 @@
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   props: {
     groups: {
@@ -35,8 +38,10 @@ export default {
     };
   },
   directives: {
-    indeterminate(el, binding) {
-      el.indeterminate = Boolean(binding.value);
+    indeterminate: {
+      update(el, binding) {
+        el.indeterminate = Boolean(binding.value);
+      },
     },
   },
   methods: {
@@ -47,6 +52,14 @@ export default {
 
       group.checked = every;
       group.indeterminate = !every && every !== some;
+    },
+    updateChildren(group, checked) {
+      const { items } = group;
+
+      group.indeterminate = false;
+      items.forEach((item) => {
+        Vue.set(item, "checked", checked);
+      });
     },
   },
 };
