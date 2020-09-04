@@ -79,7 +79,7 @@ export default {
         Vue.set(item, "checked", checked);
         item.checked = checked;
       });
-      this.updateAll();
+      this.updateTop();
     },
     updateChild(group) {
       const { items } = group;
@@ -88,9 +88,9 @@ export default {
 
       group.checked = every;
       group.indeterminate = !every && every !== some;
-      this.updateAll();
+      this.updateTop();
     },
-    updateAll() {
+    updateTop() {
       const isIndeterminate = this.groups.some(
         ({ indeterminate }) => indeterminate
       );
