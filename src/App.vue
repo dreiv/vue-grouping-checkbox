@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <label v-for="item of items" :key="item.id">
+      <input type="checkbox" :value="item" v-model="item.checked" />
+      {{ item.name }}
+    </label>
+    <hr>
+    <p>Items: {{ items }}</p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      items: [
+        { name: "One", id: 1 },
+        { name: "Two", id: 2 },
+        { name: "Three", id: 3 },
+        { name: "Four", id: 4 },
+        { name: "Five", id: 5 },
+        { name: "Six", id: 6 },
+      ],
+    };
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+label {
+  display: block;
 }
 </style>
