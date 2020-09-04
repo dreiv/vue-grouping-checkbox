@@ -88,7 +88,6 @@ export default {
       group.indeterminate = false;
       items.forEach((item) => {
         Vue.set(item, "checked", checked);
-        item.checked = checked;
       });
 
       this.updateTop();
