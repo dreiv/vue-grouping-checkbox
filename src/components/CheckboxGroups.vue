@@ -60,12 +60,12 @@ export default {
   },
   methods: {
     updateAll(checked) {
+      this.indeterminate = false;
       this.groups.forEach((group) => {
-        this.indeterminate = false;
         group.checked = checked;
+        group.indeterminate = false;
 
         group.items.forEach((item) => {
-          group.indeterminate = false;
           item.checked = checked;
         });
       });
