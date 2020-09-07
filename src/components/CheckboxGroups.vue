@@ -55,9 +55,7 @@ export default {
   },
   mounted() {
     this.groups.forEach((group) => {
-      group.items.forEach(() => {
-        this.updateItem(group);
-      });
+      this.updateItem(group)
     });
   },
   methods: {
@@ -97,8 +95,8 @@ export default {
       const every = items.every(isChecked);
       const some = items.some(isChecked);
 
-      group.checked = every;
-      group.indeterminate = !every && every !== some;
+      Vue.set(group, "checked", every);
+      Vue.set(group, "indeterminate", !every && every !== some);
 
       this.updateTop();
     },
